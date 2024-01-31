@@ -4,6 +4,10 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import javax.swing.JPanel;
 
+/**
+ * @author RossetaCode
+ * https://rosettacode.org/wiki/Bitmap/Bresenham%27s_line_algorithm
+ */
 public class BresenhamsAlg extends JPanel {
 
   private final int pixelSize = 1;
@@ -24,7 +28,7 @@ public class BresenhamsAlg extends JPanel {
       int top = (y + maxY) * pixelSize + borderY / 2;
 
       g.setColor(Color.black);
-      g.drawOval(left, top, pixelSize, pixelSize);
+      g.drawRect(left, top, pixelSize, pixelSize);
   }
 
   public void drawLine(Graphics g, int x1, int y1, int x2, int y2, int width, int height) {

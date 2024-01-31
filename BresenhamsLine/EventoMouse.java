@@ -1,10 +1,4 @@
 package BresenhamsLine;
-
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -17,6 +11,7 @@ import javax.swing.JPanel;
 /**
  *
  * @author htrefftz
+ * 
  */
 public class EventoMouse 
     extends JPanel
@@ -44,6 +39,7 @@ public class EventoMouse
       Line2D.Double ejeX = new Line2D.Double(width, height/2, 0, height/2);
       g2d.draw(ejeX);
 
+      // Mostramos coordenadas en java y cartesianas
       g2d.setColor(Color.BLUE);
       System.out.println("Coordenadas Java");
       System.out.println("X: " + linea1.x1 + " " + linea1.x2);
@@ -84,8 +80,4 @@ public class EventoMouse
       linea1.y2 = e.getY();    
       repaint();
   }
-
-  
-
-    
 }
