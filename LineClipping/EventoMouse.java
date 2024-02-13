@@ -47,7 +47,6 @@ public class EventoMouse
 
       LineClipAlg lineClipping = new LineClipAlg();
       BresenhamsAlg bresenhamsAlg = new BresenhamsAlg(width, height);
-
       
       g2d.setColor(Color.BLACK);
       bresenhamsAlg.drawLine(g2d, lineClipping.xmin, lineClipping.ymin, lineClipping.xmin, lineClipping.ymax, width, height); // Left

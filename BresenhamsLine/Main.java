@@ -7,8 +7,6 @@ import javax.swing.JFrame;
 public class Main {
   public static void main(String[] args) {
   /*
-    TODO Reto #1: Dibujer los ejes 'x', 'y', con el mause se selecciona dos puntos en la pantalla y se dibuja la linea entre ellos.
-    
     Para tener en cuenta:
       Fue necesario rebajar el pixelSize a 1 para que se mantengan las dimensiones.
       Se tenia problema con el eje Y inverso, resuelto invirtiendo el valor de la y en el algoritmo.  
