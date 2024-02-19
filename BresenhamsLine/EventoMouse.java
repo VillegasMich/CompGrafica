@@ -52,7 +52,7 @@ public class EventoMouse
       System.out.println("X: " + x1 + " " + x2);
       System.out.println("Y: " + y1 + " " + y2);
       
-      BresenhamsAlg bresenham = new BresenhamsAlg(width, height);
+      BresenhamsAlg bresenham = new BresenhamsAlg();
       bresenham.drawLine(g2d, x1, y1, x2, y2, width, height);
 
       // g2d.setColor(Color.GREEN);

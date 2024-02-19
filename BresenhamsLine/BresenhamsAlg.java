@@ -12,7 +12,7 @@ public class BresenhamsAlg extends JPanel {
 
   private final int pixelSize = 1;
 
-  BresenhamsAlg(int w, int h) {
+  public BresenhamsAlg() {
     setPreferredSize(new Dimension());
 }
 
