@@ -27,7 +27,7 @@ public class BresenhamsAlg extends JPanel {
       int left = (x + maxX) * pixelSize + borderX / 2;
       int top = (y + maxY) * pixelSize + borderY / 2;
 
-      g.setColor(Color.black);
+    //   g.setColor(Color.black);
       g.drawRect(left, top, pixelSize, pixelSize);
   }
 
