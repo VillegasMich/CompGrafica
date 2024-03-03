@@ -108,7 +108,14 @@ public class PlanoTeclado
 
   public Point3[] multiplyAllPointsOwnAxis(Point3[] points, Matrix3 mat) {
     
+    // Double midX = (points[1].getX()-points[0].getX())/2;
+    // Double midY = (points[2].getY()-points[1].getY())/2;
+
+    // Point3 p = midX
+
     Point3 ogP1 = new Point3(points[0].getX(), points[0].getY(), 1);
+    // Point3 ogP1 = new Point3(midX, midY, 1);
+
     for (int i = 0; i < points.length; i++) {
       points[i].setX(points[i].getX()-ogP1.getX());
       points[i].setY(points[i].getY()-ogP1.getY()); 
