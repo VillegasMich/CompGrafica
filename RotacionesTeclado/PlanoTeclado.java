@@ -1,4 +1,5 @@
 package RotacionesTeclado;
+
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -12,34 +13,38 @@ import MyMath.Matrix3;
 import MyMath.Vector3;
 import MyMath.Point3;
 
-public class PlanoTeclado 
+public class PlanoTeclado
     extends JPanel
     implements KeyListener {
-    
-    int width = 500;
-    int height = 500;
-    Point3[] point3s;
-    Double[][] coordinates;
-    Double apexes;
-    Line2D.Double linea1;
-    
-    public PlanoTeclado(Double[][] x) {
-        linea1 = new Line2D.Double();
-        this.addKeyListener(this);
-        this.setFocusable(true);
-        this.requestFocusInWindow();
-        this.coordinates = x;
-        this.apexes = coordinates[0][0];
-    }
 
-    public void printCoords() {
-      for (int i = 0; i < this.coordinates.length; i++) {
-          if (this.coordinates[i].length >= 2) {
-              System.out.println(this.coordinates[i][0] + " " + this.coordinates[i][1]);
-          } else {
-              System.out.println(this.coordinates[i][0]);
-          }
+  boolean rigth = false;
+  boolean left = false;
+  boolean up = true;
+  boolean down = false;
+  int width = 500;
+  int height = 500;
+  Point3[] point3s;
+  Double[][] coordinates;
+  Double apexes;
+  Line2D.Double linea1;
+
+  public PlanoTeclado(Double[][] x) {
+    linea1 = new Line2D.Double();
+    this.addKeyListener(this);
+    this.setFocusable(true);
+    this.requestFocusInWindow();
+    this.coordinates = x;
+    this.apexes = coordinates[0][0];
+  }
+
+  public void printCoords() {
+    for (int i = 0; i < this.coordinates.length; i++) {
+      if (this.coordinates[i].length >= 2) {
+        System.out.println(this.coordinates[i][0] + " " + this.coordinates[i][1]);
+      } else {
+        System.out.println(this.coordinates[i][0]);
       }
+    }
   }
 
   public Point3[] makeApexes() {
@@ -60,21 +65,20 @@ public class PlanoTeclado
     if (this.point3s == null) {
       this.point3s = this.makeApexes();
     }
-    
 
     for (int i = y + 2; i < this.coordinates.length; i++) {
 
-        int pStart = this.coordinates[i][0].intValue();
-        int pEnd = this.coordinates[i][1].intValue();
+      int pStart = this.coordinates[i][0].intValue();
+      int pEnd = this.coordinates[i][1].intValue();
 
-        int x1 = this.point3s[pStart].getX().intValue();
-        int y1 = this.point3s[pStart].getY().intValue();
-        int x2 = this.point3s[pEnd].getX().intValue();
-        int y2 = this.point3s[pEnd].getY().intValue();
+      int x1 = this.point3s[pStart].getX().intValue();
+      int y1 = this.point3s[pStart].getY().intValue();
+      int x2 = this.point3s[pEnd].getX().intValue();
+      int y2 = this.point3s[pEnd].getY().intValue();
 
-        BresenhamsAlg bresenhams = new BresenhamsAlg();
-        g.setColor(Color.magenta);
-        bresenhams.drawLine(g, x1, y1, x2, y2, this.width, this.height);
+      BresenhamsAlg bresenhams = new BresenhamsAlg();
+      g.setColor(Color.magenta);
+      bresenhams.drawLine(g, x1, y1, x2, y2, this.width, this.height);
     }
   }
 
@@ -85,11 +89,26 @@ public class PlanoTeclado
     } else if (flag == 1) { // Escalamiento
       idMatrix = new Matrix3(new Vector3(x, 0, 0), new Vector3(0, y, 0), new Vector3(0, 0, 1));
     } else if (flag == 2) { // Rotar izquierda
-      double THETA = Math.PI/28;
-      idMatrix = new Matrix3(new Vector3(Math.cos(THETA), -Math.sin(THETA), 0), new Vector3(Math.sin(THETA), Math.cos(THETA), 0), new Vector3(0, 0, 1));
-    } else { // Rotar derecha
-      final double THETA = -Math.PI/28; 
-      idMatrix = new Matrix3(new Vector3(Math.cos(THETA), -Math.sin(THETA), 0), new Vector3(Math.sin(THETA), Math.cos(THETA), 0), new Vector3(0, 0, 1));
+      double THETA = Math.PI / 28;
+      idMatrix = new Matrix3(new Vector3(Math.cos(THETA), -Math.sin(THETA), 0),
+          new Vector3(Math.sin(THETA), Math.cos(THETA), 0), new Vector3(0, 0, 1));
+    } else if (flag == 3) { // Rotar derecha
+      final double THETA = -Math.PI / 28;
+      idMatrix = new Matrix3(new Vector3(Math.cos(THETA), -Math.sin(THETA), 0),
+          new Vector3(Math.sin(THETA), Math.cos(THETA), 0), new Vector3(0, 0, 1));
+    } else if (flag == 4) { // 90 anti clockwise
+      idMatrix = new Matrix3(new Vector3(0, -1, 0),
+          new Vector3(1, 0, 0), new Vector3(0, 0, 1));
+    } else if (flag == 5) { // 90 clockwise
+      final double THETA = Math.toRadians(-90);
+      idMatrix = new Matrix3(new Vector3(Math.cos(THETA), -Math.sin(THETA), 0),
+          new Vector3(Math.sin(THETA), Math.cos(THETA), 0), new Vector3(0, 0, 1));
+    } else if (flag == 6) { // Reflection Y
+      idMatrix = new Matrix3(new Vector3(-1, 0, 0),
+          new Vector3(0, 1, 0), new Vector3(0, 0, -1));
+    } else { // Reflection x
+      idMatrix = new Matrix3(new Vector3(1, 0, 0),
+          new Vector3(0, -1, 0), new Vector3(0, 0, 1));
     }
     return idMatrix;
   }
@@ -107,51 +126,47 @@ public class PlanoTeclado
   }
 
   public Point3[] multiplyAllPointsOwnAxis(Point3[] points, Matrix3 mat) {
-    
-    // Double midX = (points[1].getX()-points[0].getX())/2;
-    // Double midY = (points[2].getY()-points[1].getY())/2;
-
-    // Point3 p = midX
 
     Point3 ogP1 = new Point3(points[0].getX(), points[0].getY(), 1);
-    // Point3 ogP1 = new Point3(midX, midY, 1);
 
     for (int i = 0; i < points.length; i++) {
-      points[i].setX(points[i].getX()-ogP1.getX());
-      points[i].setY(points[i].getY()-ogP1.getY()); 
+      points[i].setX(points[i].getX() - ogP1.getX());
+      points[i].setY(points[i].getY() - ogP1.getY());
     }
     for (int i = 0; i < points.length; i++) {
       points[i] = multiplyMatrix(points[i], mat);
     }
     for (int i = 0; i < points.length; i++) {
-      points[i].setX(points[i].getX()+ogP1.getX());
-      points[i].setY(points[i].getY()+ogP1.getY()); 
+      points[i].setX(points[i].getX() + ogP1.getX());
+      points[i].setY(points[i].getY() + ogP1.getY());
     }
     return points;
   }
 
   @Override
   public void paintComponent(Graphics g) {
-      super.paintComponent(g);
-      
-      Graphics2D g2d = (Graphics2D) g;
-      this.DrawForm(g2d);
-      
+    super.paintComponent(g);
+
+    Graphics2D g2d = (Graphics2D) g;
+    this.DrawForm(g2d);
+
   }
+
   @Override
   public void keyPressed(KeyEvent e) {
     int tecla = e.getKeyCode();
+
     System.out.println("Key pressed " + tecla);
-    if(tecla == KeyEvent.VK_UP) {
-        Matrix3 mat = createMoveMatrix(0, 0, 10);
-        multiplyAllPoints(this.point3s, mat);
+    if (tecla == KeyEvent.VK_UP) {
+      Matrix3 mat = createMoveMatrix(0, 0, 10);
+      multiplyAllPoints(this.point3s, mat);
     } else if (tecla == KeyEvent.VK_DOWN) {
       Matrix3 mat = createMoveMatrix(0, 0, -10);
       multiplyAllPoints(this.point3s, mat);
     } else if (tecla == KeyEvent.VK_RIGHT) {
       Matrix3 mat = createMoveMatrix(0, 10, 0);
       multiplyAllPoints(this.point3s, mat);
-    } else if(tecla == KeyEvent.VK_LEFT) {
+    } else if (tecla == KeyEvent.VK_LEFT) {
       Matrix3 mat = createMoveMatrix(0, -10, 0);
       multiplyAllPoints(this.point3s, mat);
     } else if (tecla == KeyEvent.VK_U) {
@@ -172,11 +187,101 @@ public class PlanoTeclado
     } else if (tecla == KeyEvent.VK_P) {
       Matrix3 mat = createMoveMatrix(2, 0, 0);
       multiplyAllPointsOwnAxis(this.point3s, mat);
+    } else if (tecla == KeyEvent.VK_D) {
+      if (this.up == true) {
+        Matrix3 mat = createMoveMatrix(5, 0, 0);
+        multiplyAllPointsOwnAxis(this.point3s, mat);
+        this.down = false;
+        this.left = false;
+        this.rigth = true;
+        this.up = false;
+        Matrix3 matDes = createMoveMatrix(0, 10, 0);
+        multiplyAllPoints(this.point3s, matDes);
+      } else if (this.down == true) {
+        Matrix3 mat = createMoveMatrix(4, 0, 0);
+        multiplyAllPointsOwnAxis(this.point3s, mat);
+        this.down = false;
+        this.left = false;
+        this.rigth = true;
+        this.up = false;
+        Matrix3 matDes = createMoveMatrix(0, 10, 0);
+        multiplyAllPoints(this.point3s, matDes);
+      } else if (this.left == true) {
+        Matrix3 mat = createMoveMatrix(6, 0, 0);
+        multiplyAllPointsOwnAxis(this.point3s, mat);
+        this.down = false;
+        this.left = false;
+        this.rigth = true;
+        this.up = false;
+        Matrix3 matDes = createMoveMatrix(0, -10, 0);
+        multiplyAllPoints(this.point3s, matDes);
+      } else {
+        Matrix3 matDes = createMoveMatrix(0, 10, 0);
+        multiplyAllPoints(this.point3s, matDes);
+      }
+    } else if (tecla == KeyEvent.VK_A) {
+      if (this.up == true) {
+        Matrix3 mat = createMoveMatrix(4, 0, 0);
+        multiplyAllPointsOwnAxis(this.point3s, mat);
+        this.down = false;
+        this.left = true;
+        this.rigth = false;
+        this.up = false;
+        Matrix3 matDes = createMoveMatrix(0, -10, 0);
+        multiplyAllPoints(this.point3s, matDes);
+      } else if (this.down == true) {
+        Matrix3 mat = createMoveMatrix(5, 0, 0);
+        multiplyAllPointsOwnAxis(this.point3s, mat);
+        this.down = false;
+        this.left = true;
+        this.rigth = false;
+        this.up = false;
+        Matrix3 matDes = createMoveMatrix(0, -10, 0);
+        multiplyAllPoints(this.point3s, matDes);
+      } else if (this.rigth == true) {
+        Matrix3 mat = createMoveMatrix(6, 0, 0);
+        multiplyAllPointsOwnAxis(this.point3s, mat);
+        this.down = false;
+        this.left = true;
+        this.rigth = false;
+        this.up = false;
+        Matrix3 matDes = createMoveMatrix(0, 10, 0);
+        multiplyAllPoints(this.point3s, matDes);
+      } else {
+        Matrix3 matDes = createMoveMatrix(0, -10, 0);
+        multiplyAllPoints(this.point3s, matDes);
+      }
+    } else if (tecla == KeyEvent.VK_S) {
+      if (this.down == false) {
+        Matrix3 mat = createMoveMatrix(6, 0, 0);
+        multiplyAllPointsOwnAxis(this.point3s, mat);
+        this.down = true;
+        this.left = false;
+        this.rigth = false;
+        this.up = false;
+      }
+      Matrix3 matDes = createMoveMatrix(0, 0, -10);
+      multiplyAllPoints(this.point3s, matDes);
+    } else if (tecla == KeyEvent.VK_W) {
+      if (this.up == false) {
+        Matrix3 mat = createMoveMatrix(7, 0, 0);
+        multiplyAllPointsOwnAxis(this.point3s, mat);
+        this.down = false;
+        this.left = false;
+        this.rigth = false;
+        this.up = true;
+      }
+      Matrix3 matDes = createMoveMatrix(0, 0, 10);
+      multiplyAllPoints(this.point3s, matDes);
     }
-    repaint();    
+    repaint();
   }
+
   @Override
-  public void keyReleased(KeyEvent e) {}
+  public void keyReleased(KeyEvent e) {
+  }
+
   @Override
-  public void keyTyped(KeyEvent e) {}
+  public void keyTyped(KeyEvent e) {
+  }
 }
