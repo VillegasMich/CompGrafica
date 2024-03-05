@@ -97,8 +97,9 @@ public class PlanoTeclado
       idMatrix = new Matrix3(new Vector3(Math.cos(THETA), -Math.sin(THETA), 0),
           new Vector3(Math.sin(THETA), Math.cos(THETA), 0), new Vector3(0, 0, 1));
     } else if (flag == 4) { // 90 anti clockwise
-      idMatrix = new Matrix3(new Vector3(0, -1, 0),
-          new Vector3(1, 0, 0), new Vector3(0, 0, 1));
+      final double THETA = Math.toRadians(90);
+      idMatrix = new Matrix3(new Vector3(Math.cos(THETA), -Math.sin(THETA), 0),
+          new Vector3(Math.sin(THETA), Math.cos(THETA), 0), new Vector3(0, 0, 1));
     } else if (flag == 5) { // 90 clockwise
       final double THETA = Math.toRadians(-90);
       idMatrix = new Matrix3(new Vector3(Math.cos(THETA), -Math.sin(THETA), 0),
@@ -107,8 +108,11 @@ public class PlanoTeclado
       idMatrix = new Matrix3(new Vector3(-1, 0, 0),
           new Vector3(0, 1, 0), new Vector3(0, 0, -1));
     } else { // Reflection x
-      idMatrix = new Matrix3(new Vector3(1, 0, 0),
-          new Vector3(0, -1, 0), new Vector3(0, 0, 1));
+      final double THETA = Math.toRadians(180);
+      idMatrix = new Matrix3(new Vector3(Math.cos(THETA), -Math.sin(THETA), 0),
+          new Vector3(Math.sin(THETA), Math.cos(THETA), 0), new Vector3(0, 0, 1));
+      // idMatrix = new Matrix3(new Vector3(1, 0, 0),
+      // new Vector3(0, -1, 0), new Vector3(0, 0, 1));
     }
     return idMatrix;
   }
@@ -188,7 +192,7 @@ public class PlanoTeclado
       Matrix3 mat = createMoveMatrix(2, 0, 0);
       multiplyAllPointsOwnAxis(this.point3s, mat);
     } else if (tecla == KeyEvent.VK_D) {
-      if (this.up == true) {
+      if (this.up) {
         Matrix3 mat = createMoveMatrix(5, 0, 0);
         multiplyAllPointsOwnAxis(this.point3s, mat);
         this.down = false;
@@ -197,7 +201,7 @@ public class PlanoTeclado
         this.up = false;
         Matrix3 matDes = createMoveMatrix(0, 10, 0);
         multiplyAllPoints(this.point3s, matDes);
-      } else if (this.down == true) {
+      } else if (this.down) {
         Matrix3 mat = createMoveMatrix(4, 0, 0);
         multiplyAllPointsOwnAxis(this.point3s, mat);
         this.down = false;
@@ -206,7 +210,7 @@ public class PlanoTeclado
         this.up = false;
         Matrix3 matDes = createMoveMatrix(0, 10, 0);
         multiplyAllPoints(this.point3s, matDes);
-      } else if (this.left == true) {
+      } else if (this.left) {
         Matrix3 mat = createMoveMatrix(6, 0, 0);
         multiplyAllPointsOwnAxis(this.point3s, mat);
         this.down = false;
@@ -220,7 +224,7 @@ public class PlanoTeclado
         multiplyAllPoints(this.point3s, matDes);
       }
     } else if (tecla == KeyEvent.VK_A) {
-      if (this.up == true) {
+      if (this.up) {
         Matrix3 mat = createMoveMatrix(4, 0, 0);
         multiplyAllPointsOwnAxis(this.point3s, mat);
         this.down = false;
@@ -229,7 +233,7 @@ public class PlanoTeclado
         this.up = false;
         Matrix3 matDes = createMoveMatrix(0, -10, 0);
         multiplyAllPoints(this.point3s, matDes);
-      } else if (this.down == true) {
+      } else if (this.down) {
         Matrix3 mat = createMoveMatrix(5, 0, 0);
         multiplyAllPointsOwnAxis(this.point3s, mat);
         this.down = false;
@@ -238,8 +242,8 @@ public class PlanoTeclado
         this.up = false;
         Matrix3 matDes = createMoveMatrix(0, -10, 0);
         multiplyAllPoints(this.point3s, matDes);
-      } else if (this.rigth == true) {
-        Matrix3 mat = createMoveMatrix(6, 0, 0);
+      } else if (this.rigth) {
+        Matrix3 mat = createMoveMatrix(7, 0, 0);
         multiplyAllPointsOwnAxis(this.point3s, mat);
         this.down = false;
         this.left = true;
@@ -252,27 +256,69 @@ public class PlanoTeclado
         multiplyAllPoints(this.point3s, matDes);
       }
     } else if (tecla == KeyEvent.VK_S) {
-      if (this.down == false) {
-        Matrix3 mat = createMoveMatrix(6, 0, 0);
+      if (this.up) {
+        Matrix3 mat = createMoveMatrix(7, 0, 0);
         multiplyAllPointsOwnAxis(this.point3s, mat);
         this.down = true;
         this.left = false;
         this.rigth = false;
         this.up = false;
+        Matrix3 matDes = createMoveMatrix(0, 0, -10);
+        multiplyAllPoints(this.point3s, matDes);
+      } else if (this.rigth) {
+        Matrix3 mat = createMoveMatrix(5, 0, 0);
+        multiplyAllPointsOwnAxis(this.point3s, mat);
+        this.down = true;
+        this.left = false;
+        this.rigth = false;
+        this.up = false;
+        Matrix3 matDes = createMoveMatrix(0, 0, -10);
+        multiplyAllPoints(this.point3s, matDes);
+      } else if (this.left) {
+        Matrix3 mat = createMoveMatrix(4, 0, 0);
+        multiplyAllPointsOwnAxis(this.point3s, mat);
+        this.down = true;
+        this.left = false;
+        this.rigth = false;
+        this.up = false;
+        Matrix3 matDes = createMoveMatrix(0, 0, -10);
+        multiplyAllPoints(this.point3s, matDes);
+      } else {
+        Matrix3 matDes = createMoveMatrix(0, 0, -10);
+        multiplyAllPoints(this.point3s, matDes);
       }
-      Matrix3 matDes = createMoveMatrix(0, 0, -10);
-      multiplyAllPoints(this.point3s, matDes);
     } else if (tecla == KeyEvent.VK_W) {
-      if (this.up == false) {
+      if (this.down) {
         Matrix3 mat = createMoveMatrix(7, 0, 0);
         multiplyAllPointsOwnAxis(this.point3s, mat);
         this.down = false;
         this.left = false;
         this.rigth = false;
         this.up = true;
+        Matrix3 matDes = createMoveMatrix(0, 0, 10);
+        multiplyAllPoints(this.point3s, matDes);
+      } else if (this.rigth) {
+        Matrix3 mat = createMoveMatrix(4, 0, 0);
+        multiplyAllPointsOwnAxis(this.point3s, mat);
+        this.down = false;
+        this.left = false;
+        this.rigth = false;
+        this.up = true;
+        Matrix3 matDes = createMoveMatrix(0, 0, 10);
+        multiplyAllPoints(this.point3s, matDes);
+      } else if (this.left) {
+        Matrix3 mat = createMoveMatrix(5, 0, 0);
+        multiplyAllPointsOwnAxis(this.point3s, mat);
+        this.down = false;
+        this.left = false;
+        this.rigth = false;
+        this.up = true;
+        Matrix3 matDes = createMoveMatrix(0, 0, 10);
+        multiplyAllPoints(this.point3s, matDes);
+      } else {
+        Matrix3 matDes = createMoveMatrix(0, 0, 10);
+        multiplyAllPoints(this.point3s, matDes);
       }
-      Matrix3 matDes = createMoveMatrix(0, 0, 10);
-      multiplyAllPoints(this.point3s, matDes);
     }
     repaint();
   }
