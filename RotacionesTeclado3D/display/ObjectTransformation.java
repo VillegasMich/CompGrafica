@@ -17,10 +17,18 @@ public class ObjectTransformation {
     public double centerX;
     public double centerY;
     public double centerZ;
+    public boolean up = true;
+    public boolean down = false;
+    public boolean left = false;
+    public boolean rigth = false;
+    public boolean front = false;
+    public boolean back = false;
 
     public static final double DELTA_TRANSL = 10;
     public static final double DELTA_SCAL = 0.1;
     public static final double DELTA_ROT = 10 * Math.PI / 180;
+    public static final double DELTA_ROT_90 = Math.toRadians(90);
+    public static final double DELTA_ROT_180 = Math.toRadians(180);
 
     public ObjectTransformation() {
         dx = 0;
@@ -38,10 +46,10 @@ public class ObjectTransformation {
     }
 
     public TranslScalRot4x4 createTransformation() {
-        TranslScalRot4x4 tsr = new TranslScalRot4x4(dx, dy, dz, 
-        sx, sy, sz, 
-        thetaX, thetaY, thetaZ,
-        centerX, centerY, centerZ);
+        TranslScalRot4x4 tsr = new TranslScalRot4x4(dx, dy, dz,
+                sx, sy, sz,
+                thetaX, thetaY, thetaZ,
+                centerX, centerY, centerZ);
         return tsr;
     }
 
@@ -59,7 +67,7 @@ public class ObjectTransformation {
         sz = 1;
         thetaX = 0;
         thetaY = 0;
-        thetaZ = 0;  
+        thetaZ = 0;
     }
 
 }
