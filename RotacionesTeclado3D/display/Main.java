@@ -35,7 +35,7 @@ public class Main extends JPanel
     //
     // g.setColor(Color.GREEN);
     // drawOneLine(0, -100, 0, 100);
-
+    //
     g.setColor(Color.BLACK);
     po.transformObject();
     po.projectObject();
@@ -100,136 +100,24 @@ public class Main extends JPanel
       repaint();
     } else if (key == KeyEvent.VK_Z) {
       po.resetVertices();
-      po.ot.front = false;
-      po.ot.back = false;
-      po.ot.up = true;
-      po.ot.down = false;
-      po.ot.rigth = false;
-      po.ot.left = false;
       repaint();
     } else if (key == KeyEvent.VK_RIGHT) {
-      if (po.ot.up) {
-        po.ot.thetaZ -= ObjectTransformation.DELTA_ROT_90;
-        po.ot.up = false;
-      } else if (po.ot.down) {
-        po.ot.thetaZ += ObjectTransformation.DELTA_ROT_90;
-        po.ot.down = false;
-      } else if (po.ot.left) {
-        po.ot.thetaZ += ObjectTransformation.DELTA_ROT_180;
-        po.ot.left = false;
-      } else if (po.ot.front) {
-        po.ot.thetaY += ObjectTransformation.DELTA_ROT_90;
-        po.ot.front = false;
-      } else if (po.ot.back) {
-        po.ot.thetaY -= ObjectTransformation.DELTA_ROT_90;
-        po.ot.back = false;
-      }
-      po.ot.dx += ObjectTransformation.DELTA_TRANSL;
-      po.ot.rigth = true;
+      po.ot.thetaY += ObjectTransformation.DELTA_ROT;
+      po.ot.theta += ObjectTransformation.DELTA_ROT;
       repaint();
     } else if (key == KeyEvent.VK_LEFT) {
-      if (po.ot.up) {
-        po.ot.thetaZ += ObjectTransformation.DELTA_ROT_90;
-        po.ot.up = false;
-      } else if (po.ot.down) {
-        po.ot.thetaZ -= ObjectTransformation.DELTA_ROT_90;
-        po.ot.down = false;
-      } else if (po.ot.rigth) {
-        po.ot.thetaZ += ObjectTransformation.DELTA_ROT_180;
-        po.ot.rigth = false;
-      } else if (po.ot.front) {
-        po.ot.thetaY += ObjectTransformation.DELTA_ROT_90;
-        po.ot.front = false;
-      } else if (po.ot.back) {
-        po.ot.thetaY += ObjectTransformation.DELTA_ROT_90;
-        po.ot.back = false;
-      }
-      po.ot.dx -= ObjectTransformation.DELTA_TRANSL;
-      po.ot.left = true;
+      po.ot.thetaY -= ObjectTransformation.DELTA_ROT;
+      po.ot.theta -= ObjectTransformation.DELTA_ROT;
       repaint();
     } else if (key == KeyEvent.VK_UP) {
-      if (po.ot.left) {
-        po.ot.thetaZ -= ObjectTransformation.DELTA_ROT_90;
-        po.ot.left = false;
-      } else if (po.ot.down) {
-        po.ot.thetaZ += ObjectTransformation.DELTA_ROT_180;
-        po.ot.down = false;
-      } else if (po.ot.rigth) {
-        po.ot.thetaZ += ObjectTransformation.DELTA_ROT_90;
-        po.ot.rigth = false;
-      } else if (po.ot.front) {
-        po.ot.thetaX -= ObjectTransformation.DELTA_ROT_90;
-        po.ot.front = false;
-      } else if (po.ot.back) {
-        po.ot.thetaX += ObjectTransformation.DELTA_ROT_90;
-        po.ot.back = false;
-      }
-      po.ot.dy += ObjectTransformation.DELTA_TRANSL;
-      po.ot.up = true;
+      System.out.println(po.ot.theta);
+      // System.out.println(po.ot.dz);
+      po.ot.dx += ObjectTransformation.DELTA_TRANSL * Math.sin(po.ot.theta);
+      po.ot.dz -= ObjectTransformation.DELTA_TRANSL * Math.cos(po.ot.theta);
       repaint();
     } else if (key == KeyEvent.VK_DOWN) {
-      if (po.ot.left) {
-        po.ot.thetaZ += ObjectTransformation.DELTA_ROT_90;
-        po.ot.left = false;
-      } else if (po.ot.up) {
-        po.ot.thetaZ += ObjectTransformation.DELTA_ROT_180;
-        po.ot.up = false;
-      } else if (po.ot.rigth) {
-        po.ot.thetaZ -= ObjectTransformation.DELTA_ROT_90;
-        po.ot.rigth = false;
-      } else if (po.ot.front) {
-        po.ot.thetaX += ObjectTransformation.DELTA_ROT_90;
-        po.ot.front = false;
-      } else if (po.ot.back) {
-        po.ot.thetaX -= ObjectTransformation.DELTA_ROT_90;
-        po.ot.back = false;
-      }
-      po.ot.dy -= ObjectTransformation.DELTA_TRANSL;
-      po.ot.down = true;
-      repaint();
-    } else if (key == KeyEvent.VK_CAPS_LOCK) {
-      if (po.ot.left) {
-        po.ot.thetaX += ObjectTransformation.DELTA_ROT_90;
-        po.ot.left = false;
-      } else if (po.ot.up) {
-        po.ot.thetaX += ObjectTransformation.DELTA_ROT_90;
-        po.ot.up = false;
-      } else if (po.ot.rigth) {
-        po.ot.thetaX += ObjectTransformation.DELTA_ROT_90;
-        po.ot.rigth = false;
-      } else if (po.ot.down) {
-        po.ot.thetaX -= ObjectTransformation.DELTA_ROT_90;
-        po.ot.down = false;
-      } else if (po.ot.back) {
-        po.ot.thetaX += ObjectTransformation.DELTA_ROT_180;
-        po.ot.back = false;
-      }
-      po.ot.sx += ObjectTransformation.DELTA_SCAL;
-      po.ot.sy += ObjectTransformation.DELTA_SCAL;
-      po.ot.sz += ObjectTransformation.DELTA_SCAL;
-      po.ot.front = true;
-      repaint();
-    } else if (key == KeyEvent.VK_CONTROL) {
-      if (po.ot.left) {
-        po.ot.thetaX -= ObjectTransformation.DELTA_ROT_90;
-        po.ot.left = false;
-      } else if (po.ot.up) {
-        po.ot.thetaX -= ObjectTransformation.DELTA_ROT_90;
-        po.ot.up = false;
-      } else if (po.ot.rigth) {
-        po.ot.thetaX -= ObjectTransformation.DELTA_ROT_90;
-        po.ot.rigth = false;
-      } else if (po.ot.down) {
-        po.ot.thetaX += ObjectTransformation.DELTA_ROT_90;
-        po.ot.down = false;
-      } else if (po.ot.front) {
-        po.ot.thetaX += ObjectTransformation.DELTA_ROT_180;
-        po.ot.front = false;
-      }
-      po.ot.sx -= ObjectTransformation.DELTA_SCAL;
-      po.ot.sy -= ObjectTransformation.DELTA_SCAL;
-      po.ot.sz -= ObjectTransformation.DELTA_SCAL;
-      po.ot.back = true;
+      po.ot.dx -= ObjectTransformation.DELTA_TRANSL * Math.sin(po.ot.theta);
+      po.ot.dz += ObjectTransformation.DELTA_TRANSL * Math.cos(po.ot.theta);
       repaint();
     }
   }

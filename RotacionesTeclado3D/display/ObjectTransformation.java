@@ -17,6 +17,7 @@ public class ObjectTransformation {
     public double centerX;
     public double centerY;
     public double centerZ;
+    public double theta;
     public boolean up = true;
     public boolean down = false;
     public boolean left = false;
@@ -43,6 +44,7 @@ public class ObjectTransformation {
         centerX = 0;
         centerY = 0;
         centerZ = 0;
+        theta = 0;
     }
 
     public TranslScalRot4x4 createTransformation() {
